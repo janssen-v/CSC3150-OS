@@ -58,27 +58,27 @@ int main(int argc, char *argv[]) {
     // SIGINT
     printf("Child raised SIGINT signal\n");
     break;
-  case 3:
+  case 131: // 131, originally 3
     // SIGQUIT
     printf("Child raised SIGQUIT signal\n");
     break;
-  case 4:
-    // SIGILL
+  case 132: // 132, originally 4
+    // SIGILL 
     printf("Child raised SIGILL signal\n");
     break;
-  case 5:
+  case 133: // 133, originally 5
     // SIGTRAP
     printf("Child raised SIGTRAP signal\n");
     break;
-  case 6:
+  case 134: // 134, originally 6
     // SIGABRT
     printf("Child raised SIGABRT signal\n");
     break;
-  case 7:
+  case 135: // 135, originally 7
     // SIGBUS
     printf("Child raised SIGBUS signal\n");
     break;
-  case 8:
+  case 136: // 136, originally 8
     // SIGFPE
     printf("Child raised SIGFPE signal\n");
     break;
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
     // SIGUSR1
     printf("Child raised SIGUSR1 signal\n");
     break;
-  case 11:
+  case 139: // 139, originally 11
     // SIGSEGV
     printf("Child raised SIGSEGV signal\n");
     break;
