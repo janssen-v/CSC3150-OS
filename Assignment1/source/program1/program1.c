@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
     printf("I'm the Child Process, my pid = %d\n", getpid());
     // Execute test program exec()
     execv(argv[1], argv);
+    printf("Original child process is running!\n");
   }
 
   // Print termination status of child process (Normal)
