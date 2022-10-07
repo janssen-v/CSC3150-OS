@@ -83,6 +83,30 @@ int main(int argc, char *argv[])
 		// SIGFPE
 		printf("Child raised SIGFPE signal\n");
 		break;
+	case 3: // 131
+		// SIGQUIT
+		printf("Child raised SIGQUIT signal\n");
+		break;
+	case 4: // 132
+		// SIGILL
+		printf("Child raised SIGILL signal\n");
+		break;
+	case 5: // 133
+		// SIGTRAP
+		printf("Child raised SIGTRAP signal\n");
+		break;
+	case 6: // 134
+		// SIGABRT
+		printf("Child raised SIGABRT signal\n");
+		break;
+	case 7: // 135
+		// SIGBUS
+		printf("Child raised SIGBUS signal\n");
+		break;
+	case 8: // 136
+		// SIGFPE
+		printf("Child raised SIGFPE signal\n");
+		break;
 	case 9:
 		// SIGKILL [cannot be caught, blocked or ignored]
 		printf("Child raised SIGKILL signal\n");
