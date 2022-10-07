@@ -29,6 +29,9 @@ int my_fork(void *argc){
 	}
 	
 	/* fork a process using kernel_clone or kernel_thread */
+
+	pid_t ret;
+	ret = kernel_clone()
 	
 	/* execute a test program in child process */
 	
