@@ -51,6 +51,7 @@ extern int do_execve(struct filename *filename,
 int my_exec(void)
 {
 	const char path[] = "/tmp/test";
+	//const char path[] = "/home/vagrant/code/CSC3150-OS/Assignment1/source/program2"
 	int ret;
 	struct filename *filename = getname_kernel(path);
 	ret = do_execve(filename, NULL, NULL);
