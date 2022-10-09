@@ -62,20 +62,19 @@ int my_exec(void)
 
 //implement wait function
 
-void my_wait(pid_t pid) {
+void my_wait(pid_t pid)
+{
 	enum pid_type type;
-	struct pid *wo_pid = NULL;	// Struct PID -> kernel internal PID
-	type = PIDTYPE_PID;			// Ref. /linux/pid.h
+	struct pid *wo_pid = NULL; // Struct PID -> kernel internal PID
+	type = PIDTYPE_PID; // Ref. /linux/pid.h
 	int exit_status;
-	struct wait_opts wo = {
-		.wo_type = type,
-		.wo_flags = WEXITED | WUNTRACED,
-		.wo_pid = wo_pid,
-		.wo_info = NULL,
-		.wo_stat = exit_status,
-		.wo_rusage = NULL
-		};
-	
+	struct wait_opts wo = {.wo_type = type,
+			       .wo_flags = WEXITED | WUNTRACED,
+			       .wo_pid = wo_pid,
+			       .wo_info = NULL,
+			       .wo_stat = exit_status,
+			       .wo_rusage = NULL };
+
 	// Wait for child
 	int retval = do_wait(&wo);
 
@@ -83,13 +82,15 @@ void my_wait(pid_t pid) {
 	if (__WIFEXITED(exit_status)) {
 		// Normal Termination
 		printk("[program2] : Child process terminated\n");
-		printk("[program2] : The return signal is : %d\n", __WTERMSIG(exit_status));
-	} else if (__WIFSTOPPED(exit_status)){
+		printk("[program2] : The return signal is : %d\n",
+		       __WTERMSIG(exit_status));
+	} else if (__WIFSTOPPED(exit_status)) {
 		// SIGSTOP Handling
 		printk("[program2] : Child process is stopped\n");
-	} else if (__WIFSIGNALED(exit_status)){
+	} else if (__WIFSIGNALED(exit_status)) {
 		// Print signal raised in child
-		printk("[program2] : The return signal is : %d\n", __WTERMSIG(exit_status));
+		printk("[program2] : The return signal is : %d\n",
+		       __WTERMSIG(exit_status));
 	}
 
 	put_pid(wo_pid);
@@ -114,14 +115,14 @@ int my_fork(void *argc)
 	/* fork a process using kernel_clone or kernel_thread */
 
 	struct kernel_clone_args args = {
-		.flags = SIGCHLD,					// Bit mask
-      	.child_tid = NULL, 					// Where to store child TID in child mem
-      	.parent_tid = NULL, 				// Where to store child TID in parent mem
-     	.exit_signal = SIGCHLD,				// Signal to parent on child term
-      	.stack = (unsigned long)&my_exec,	// Ptr to stack of execd fn
-     	.stack_size = 0,
-     	.tls = 0,
-  	};
+		.flags = SIGCHLD, // Bit mask
+		.child_tid = NULL, // Where to store child TID in child mem
+		.parent_tid = NULL, // Where to store child TID in parent mem
+		.exit_signal = SIGCHLD, // Signal to parent on child term
+		.stack = (unsigned long)&my_exec, // Ptr to stack of execd fn
+		.stack_size = 0,
+		.tls = 0,
+	};
 
 	/* execute a test program in child process */
 	/* wait until child process terminates */
@@ -131,8 +132,10 @@ int my_fork(void *argc)
 	if (child_pid == 0) {
 		my_exec();
 	} else {
-		printk("[program2] : The child process has pid = %d\n", child_pid);
-    	printk("[program2] : This is the parent process, pid = %d\n", current->pid);
+		printk("[program2] : The child process has pid = %d\n",
+		       child_pid);
+		printk("[program2] : This is the parent process, pid = %d\n",
+		       current->pid);
 		my_wait(child_pid);
 	}
 
