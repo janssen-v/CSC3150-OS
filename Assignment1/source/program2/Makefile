@@ -13,7 +13,9 @@ PWD	:= $(shell pwd)
 
 all:
 	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD) modules
+	$(CC) test.c -o test
 clean:
 	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD) clean
+	rm test
 
 endif
