@@ -70,12 +70,13 @@ void *logs_move(void *t)
 	for (int l = 0; l < LOG_LENGTH; l++) {
 		map[row][l] = '=';
 	}
-	for (int c = LOG_LENGTH; c < COLUMN-1; c++) {
+	for (int c = LOG_LENGTH; c < COLUMN - 1; c++) {
 		map[row][c] = ' ';
 	}
 
 	int temp_row[COLUMN];
-	int addv = (row % 2 == 1) ? 1 : 49; // Div rows into left and right sections
+	int addv = (row % 2 == 1) ? 1 :
+				    49; // Div rows into left and right sections
 	pthread_mutex_unlock(&var_lock_1);
 
 	// Delay log movement in a staggered fashion per row
@@ -92,7 +93,8 @@ void *logs_move(void *t)
 		for (int col = 0; col < COLUMN; col++) {
 			if (row != frog.x) {
 				if (map[row][col] == '0') {
-					temp_row[(col + addv) % COLUMN] = '='; // Change frog to 0, previous loc to =
+					temp_row[(col + addv) % COLUMN] =
+						'='; // Change frog to 0, previous loc to =
 				} else {
 					temp_row[(col + addv) % COLUMN] =
 						map[row][col];
@@ -105,8 +107,7 @@ void *logs_move(void *t)
 					    map[row][col] != '0') {
 						temp_row[(col + addv) % COLUMN] =
 							'0';
-					}
-					else {
+					} else {
 						temp_row[(col + addv) % COLUMN] =
 							map[row][col];
 					}
@@ -135,14 +136,16 @@ void *logs_move(void *t)
 					}
 					frog.x -= 1;
 					map[frog.x][frog.y] = '0';
-				} else if (map[frog.x-1][frog.y] == ' '){ // If move up is water, then drown
+				} else if (map[frog.x - 1][frog.y] ==
+					   ' ') { // If move up is water, then drown
 					game_status = 3;
 				}
 				break;
 			case 'A':
 			case 'a': // Left
 				// If frog is at leftmost part of screen, cannot move
-				if (frog.y == 1) { // Don't move past left boundary
+				if (frog.y ==
+				    1) { // Don't move past left boundary
 					break;
 				}
 				if (map[frog.x][frog.y - 1] == '=' ||
@@ -154,7 +157,8 @@ void *logs_move(void *t)
 					}
 					frog.y -= 1;
 					map[frog.x][frog.y] = '0';
-				} else if (map[frog.x][frog.y-1] == ' '){ // If move left is water, then drown
+				} else if (map[frog.x][frog.y - 1] ==
+					   ' ') { // If move left is water, then drown
 					game_status = 3;
 				}
 				break;
@@ -169,13 +173,15 @@ void *logs_move(void *t)
 					}
 					frog.x += 1;
 					map[frog.x][frog.y] = '0';
-				} else if (map[frog.x+1][frog.y] == ' '){ // If move down is water, then drown
+				} else if (map[frog.x + 1][frog.y] ==
+					   ' ') { // If move down is water, then drown
 					game_status = 3;
 				}
 				break;
 			case 'D':
 			case 'd': // Right
-				if (frog.y == 48) { // Don't move past right boundary
+				if (frog.y ==
+				    48) { // Don't move past right boundary
 					break;
 				}
 				if (map[frog.x][frog.y + 1] == '=' ||
@@ -187,7 +193,8 @@ void *logs_move(void *t)
 					}
 					frog.y += 1;
 					map[frog.x][frog.y] = '0';
-				} else if (map[frog.x][frog.y+1] == ' '){ // If move right is water, then drown
+				} else if (map[frog.x][frog.y + 1] ==
+					   ' ') { // If move right is water, then drown
 					game_status = 3;
 				}
 				break;
@@ -207,8 +214,8 @@ void *logs_move(void *t)
 		}
 
 		if (frog.y == 0 || frog.y == COLUMN - 1) {
-		 	game_status = 4; // Out of Bounds
-		 }
+			game_status = 4; // Out of Bounds
+		}
 
 		printf("\033[H");
 		for (int r = 0; r <= ROW; r++) {
@@ -244,16 +251,16 @@ int main(int argc, char *argv[])
 
 	frog = Node(ROW, (COLUMN - 1) / 2);
 	map[frog.x][frog.y] = '0';
-    
-    printf("\033[H");
-    printf("\033[2J");
+
+	printf("\033[H");
+	printf("\033[2J");
 
 	//Print the map into screen
 	for (int r = 0; r <= ROW; r++) {
 		puts(map[i]);
 	}
 
-    printf("\033[H"); 
+	printf("\033[H");
 
 	game_status = 1; //Game exits with status other than 1
 
