@@ -138,6 +138,13 @@ void *logs_move(void *t)
 					map[frog.x][frog.y] = '0';
 				} else if (map[frog.x - 1][frog.y] ==
 					   ' ') { // If move up is water, then drown
+					if (frog.x == ROW) {
+						map[frog.x][frog.y] = '|';
+					} else {
+						map[frog.x][frog.y] = '=';
+					}
+					frog.x -= 1;
+					map[frog.x][frog.y] = '0';
 					game_status = 3;
 				}
 				break;
@@ -159,6 +166,13 @@ void *logs_move(void *t)
 					map[frog.x][frog.y] = '0';
 				} else if (map[frog.x][frog.y - 1] ==
 					   ' ') { // If move left is water, then drown
+					if (frog.x == ROW) {
+						map[frog.x][frog.y] = '|';
+					} else {
+						map[frog.x][frog.y] = '=';
+					}
+					frog.y -= 1;
+					map[frog.x][frog.y] = '0';
 					game_status = 3;
 				}
 				break;
@@ -175,6 +189,13 @@ void *logs_move(void *t)
 					map[frog.x][frog.y] = '0';
 				} else if (map[frog.x + 1][frog.y] ==
 					   ' ') { // If move down is water, then drown
+					if (frog.x == ROW) {
+						map[frog.x][frog.y] = '|';
+					} else {
+						map[frog.x][frog.y] = '=';
+					}
+					frog.x += 1;
+					map[frog.x][frog.y] = '0';
 					game_status = 3;
 				}
 				break;
@@ -195,6 +216,13 @@ void *logs_move(void *t)
 					map[frog.x][frog.y] = '0';
 				} else if (map[frog.x][frog.y + 1] ==
 					   ' ') { // If move right is water, then drown
+					if (frog.x == ROW) {
+						map[frog.x][frog.y] = '|';
+					} else {
+						map[frog.x][frog.y] = '=';
+					}
+					frog.y += 1;
+					map[frog.x][frog.y] = '0';
 					game_status = 3;
 				}
 				break;
@@ -203,20 +231,7 @@ void *logs_move(void *t)
 			}
 		}
 
-		/*  Check game's status  */
-		if (frog.x == 0) {
-			game_status = 2; // Winner
-		}
-
 		/*  Print the map on the screen  */
-		if (row == frog.x) {
-			frog.y = (frog.y + addv) % COLUMN;
-		}
-
-		if (frog.y == 0 || frog.y == COLUMN - 1) {
-			game_status = 4; // Out of Bounds
-		}
-
 		printf("\033[H");
 		for (int r = 0; r <= ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -224,7 +239,20 @@ void *logs_move(void *t)
 			}
 			printf("\n");
 		}
-		// printf("frogX, frogY: %d, %d\n", frog.x, frog.y); Debug
+		// printf("frogX, frogY: %d, %d\n", frog.x, frog.y); Debug Location
+
+		/*  Check game's status  */
+		if (frog.x == 0) {
+			game_status = 2; // Winner
+		}
+
+		if (row == frog.x) {
+			frog.y = (frog.y + addv) % COLUMN;
+		}
+
+		if (frog.y == 0 || frog.y == COLUMN - 1) {
+			game_status = 4; // Out of Bounds
+		}
 
 		pthread_mutex_unlock(&var_lock_2);
 		pthread_mutex_unlock(&var_lock_1);
