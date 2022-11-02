@@ -13,8 +13,6 @@
 #define LOG_LENGTH 20 //Log Length -> lower this to increase difficulty
 
 pthread_mutex_t var_lock_1 = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t var_lock_2 = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond_var = PTHREAD_COND_INITIALIZER;
 
 int game_status;
 
@@ -88,7 +86,6 @@ void *logs_move(void *t)
 
 	while (game_status == 1) {
 		pthread_mutex_lock(&var_lock_1);
-		pthread_mutex_lock(&var_lock_2);
 		/*  Move the logs  */
 		for (int col = 0; col < COLUMN; col++) {
 			if (row != frog.x) {
@@ -254,7 +251,6 @@ void *logs_move(void *t)
 			game_status = 4; // Out of Bounds
 		}
 
-		pthread_mutex_unlock(&var_lock_2);
 		pthread_mutex_unlock(&var_lock_1);
 		sleep(row, delay);
 	}
@@ -294,8 +290,6 @@ int main(int argc, char *argv[])
 
 	/*  Create pthreads for wood move and frog control.  */
 	pthread_mutex_init(&var_lock_1, NULL);
-	pthread_mutex_init(&var_lock_2, NULL);
-	pthread_cond_init(&cond_var, NULL);
 	pthread_attr_t attr;
 	pthread_t threads[ROW - 1]; // Thread for each row
 	pthread_attr_init(&attr);
@@ -332,7 +326,6 @@ int main(int argc, char *argv[])
 
 	pthread_attr_destroy(&attr);
 	pthread_mutex_destroy(&var_lock_1);
-	pthread_cond_destroy(&cond_var);
 
 	pthread_exit(NULL);
 
