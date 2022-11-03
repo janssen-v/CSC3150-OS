@@ -12,3 +12,5 @@ __device__ void user_program(VirtualMemory *vm, uchar *input, uchar *results,
 
   vm_snapshot(vm, results, 0, input_size);
 }
+
+// Expected page fault number is 8193
