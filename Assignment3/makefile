@@ -1,4 +1,4 @@
-all: build run
+all: build runCluster
 
 build:
 	@echo "Building..."
@@ -8,6 +8,20 @@ build:
 run:
 	@echo "Running..."
 	./test
+	@echo "Done."
+
+runCluster:
+	@echo "Running..."
+	srun ./test
+	@echo "Done."
+
+provisionCluster:
+	@echo "Provisioning 1 Thread, 1 Node Provisioned for 20 Minutes..."
+	salloc -N1 -n1 -t20 -p Debug
+
+releaseCluster:
+	@echo "Releasing Resources..."
+	scancel -u 119010518
 	@echo "Done."
 
 clean:
