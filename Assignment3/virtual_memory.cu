@@ -115,10 +115,9 @@ __device__ void vm_write(VirtualMemory *vm, u32 addr, uchar value)
   u32 physical_address = 0xFFFFFFFF;
 
   // Get physical address if it exists
-  u32 virtualPage = addr / vm->PAGESIZE;
   for (int i = 0; i < vm->PAGE_ENTRIES; i++)
   {
-    if ((vm->invert_page_table[i]) == (virtualPage))
+    if ((vm->invert_page_table[i]) == (page_num))
     {
       physical_address = (u32)i;
       break;
